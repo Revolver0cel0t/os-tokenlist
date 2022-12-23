@@ -3,7 +3,7 @@ import defaultList from "../lists/3xcalibur-default.json";
 
 const lists = [
   {
-    name: "pancakeswap-default",
+    name: "3xcalibur-default",
     src: srcDefault,
     actual: defaultList,
   },
