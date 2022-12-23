@@ -7,9 +7,9 @@
   "private": true,
   "scripts": {
     "build": "rm -rf ./dist && rollup -c",
-    "checksum:pcs-default": "yarn build && node ./dist checksum 3xcalibur-default",
-    "generate:pcs-default": "yarn test --list=3xcalibur-default && yarn build && node ./dist generate 3xcalibur-default",
-    "makelist:pcs-default": "yarn checksum:pcs-default && yarn generate:pcs-default",
+    "checksum:xcal-default": "yarn build && node ./dist checksum 3xcalibur-default",
+    "generate:xcal-default": "yarn test --list=3xcalibur-default && yarn build && node ./dist generate 3xcalibur-default",
+    "makelist:xcal-default": "yarn checksum:xcal-default && yarn generate:xcal-default",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
     "test": "jest",
     "ci-check": "yarn build && node ./dist ci-check",
