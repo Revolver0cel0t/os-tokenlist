@@ -4,7 +4,7 @@ import fs from "fs";
 import path from "path";
 import { getAddress } from "@ethersproject/address";
 import pancakeswapSchema from "@pancakeswap/token-lists/schema/pancakeswap.json";
-import currentPancakeswapDefaultList from "../lists/3xcalibur-default.json";
+import current3xcaliburDefaultList from "../lists/3xcalibur-default.json";
 import { buildList, VersionBump } from "../src/buildList";
 import getTokensChainData from "../src/utils/getTokensChainData";
 
@@ -24,7 +24,7 @@ const CASES = [["3xcalibur-default"]] as const;
 const cases = listArgs ? CASES.filter((c) => c[0] === listArgs) : CASES;
 
 const currentLists = {
-  "3xcalibur-default": currentPancakeswapDefaultList,
+  "3xcalibur-default": current3xcaliburDefaultList,
 };
 
 const ajv = new Ajv({ allErrors: true, format: "full" });
@@ -96,7 +96,7 @@ expect.extend({
     const hasTWLogo =
       token.logoURI === `https://assets-cdn.trustwallet.com/blockchains/smartchain/assets/${token.address}/logo.png`;
     let hasLocalLogo = false;
-    const refersToLocalLogo = token.logoURI === `https://tokens.pancakeswap.finance/images/${token.address}.png`;
+    const refersToLocalLogo = token.logoURI === `https://tokens.3xcalibur.com/images/${token.address}.png`;
     if (refersToLocalLogo) {
       const fileName = token.logoURI.split("/").pop();
       // Note: fs.existsSync can't be used here because its not case sensetive
