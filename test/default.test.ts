@@ -91,28 +91,28 @@ expect.extend({
       pass: false,
     };
   },
-  // toBeValidLogo(token) {
-  //   // TW logos are always checksummed
-  //   const hasTWLogo =
-  //     token.logoURI === `https://assets-cdn.trustwallet.com/blockchains/smartchain/assets/${token.address}/logo.png`;
-  //   let hasLocalLogo = false;
-  //   const refersToLocalLogo = token.logoURI === `https://tokens.pancakeswap.finance/images/${token.address}.png`;
-  //   if (refersToLocalLogo) {
-  //     const fileName = token.logoURI.split("/").pop();
-  //     // Note: fs.existsSync can't be used here because its not case sensetive
-  //     hasLocalLogo = logoFiles.map((f) => f.name).includes(fileName);
-  //   }
-  //   if (hasTWLogo || hasLocalLogo) {
-  //     return {
-  //       message: () => ``,
-  //       pass: true,
-  //     };
-  //   }
-  //   return {
-  //     message: () => `Token ${token.symbol} (${token.address}) has invalid logo: ${token.logoURI}`,
-  //     pass: false,
-  //   };
-  // },
+  toBeValidLogo(token) {
+    // TW logos are always checksummed
+    const hasTWLogo =
+      token.logoURI === `https://assets-cdn.trustwallet.com/blockchains/smartchain/assets/${token.address}/logo.png`;
+    let hasLocalLogo = false;
+    const refersToLocalLogo = token.logoURI === `https://tokens.pancakeswap.finance/images/${token.address}.png`;
+    if (refersToLocalLogo) {
+      const fileName = token.logoURI.split("/").pop();
+      // Note: fs.existsSync can't be used here because its not case sensetive
+      hasLocalLogo = logoFiles.map((f) => f.name).includes(fileName);
+    }
+    if (hasTWLogo || hasLocalLogo) {
+      return {
+        message: () => ``,
+        pass: true,
+      };
+    }
+    return {
+      message: () => `Token ${token.symbol} (${token.address}) has invalid logo: ${token.logoURI}`,
+      pass: false,
+    };
+  },
 });
 
 describe.each(cases)("buildList %s", (listName, opt: TestOpts = undefined) => {
@@ -168,13 +168,13 @@ describe.each(cases)("buildList %s", (listName, opt: TestOpts = undefined) => {
     }
   });
 
-  it("all tokens have correct logos", () => {
-    if (!opt || !opt.skipLogo) {
-      for (const token of defaultTokenList.tokens) {
-        expect(token).toBeValidLogo();
-      }
-    }
-  });
+  // it("all tokens have correct logos", () => {
+  //   if (!opt || !opt.skipLogo) {
+  //     for (const token of defaultTokenList.tokens) {
+  //       expect(token).toBeValidLogo();
+  //     }
+  //   }
+  // });
 
   it("all tokens have correct decimals", async () => {
     const addressArray = defaultTokenList.tokens.map((token) => token.address);

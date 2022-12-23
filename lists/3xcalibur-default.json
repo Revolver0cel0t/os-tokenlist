@@ -19,14 +19,6 @@
       "logoURI": "https://tokens.3xcalibur.com/images/symbol/XCAL.png"
     },
     {
-      "name": "Ether",
-      "address": "0x0000000000000000000000000000000000000000",
-      "symbol": "ETH",
-      "decimals": 18,
-      "chainId": 42161,
-      "logoURI": "https://raw.githubusercontent.com/sushiswap/icons/master/token/eth.jpg"
-    },
-    {
       "name": "Wrapped Ether",
       "address": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
       "symbol": "WETH",
@@ -126,7 +118,7 @@
       "name": "gmdBTCV1",
       "symbol": "gmdBTCV1",
       "decimals": 18,
-      "address": "0xeffae8eb4ca7db99e954adc060b736db78928467",
+      "address": "0xEffaE8eB4cA7db99e954adc060B736Db78928467",
       "chainId": 42161,
       "logoURI": "https://tokens.3xcalibur.com/images/symbol/GMD.png"
     },
