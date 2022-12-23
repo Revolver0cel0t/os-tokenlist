@@ -55,9 +55,9 @@ export const buildList = (listName: string, versionBump?: VersionBump): TokenLis
     tokens: sort
       ? list.sort((t1, t2) => {
           if (t1.chainId === t2.chainId) {
-            // CAKE first in extended list
-            if ((t1.symbol === "CAKE") !== (t2.symbol === "CAKE")) {
-              return t1.symbol === "CAKE" ? -1 : 1;
+            // XCAL first in extended list
+            if ((t1.symbol === "XCAL") !== (t2.symbol === "XCAL")) {
+              return t1.symbol === "XCAL" ? -1 : 1;
             }
             return t1.symbol.toLowerCase() < t2.symbol.toLowerCase() ? -1 : 1;
           }

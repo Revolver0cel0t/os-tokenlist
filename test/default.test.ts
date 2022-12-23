@@ -4,65 +4,27 @@ import fs from "fs";
 import path from "path";
 import { getAddress } from "@ethersproject/address";
 import pancakeswapSchema from "@pancakeswap/token-lists/schema/pancakeswap.json";
-import currentPancakeswapDefaultList from "../lists/pancakeswap-default.json";
-import currentPancakeswapExtendedtList from "../lists/pancakeswap-extended.json";
-import currentPancakeswapTop15List from "../lists/pancakeswap-top-15.json";
-import currentPancakeswapTop100tList from "../lists/pancakeswap-top-100.json";
-import currentCoingeckoList from "../lists/coingecko.json";
-import currentCmcList from "../lists/cmc.json";
-import currentPancakeswapMiniList from "../lists/pancakeswap-mini.json";
-import currentPancakeswapMiniExtendedList from "../lists/pancakeswap-mini-extended.json";
-import currentPancakeswapAptosList from "../lists/pancakeswap-aptos.json";
+import currentPancakeswapDefaultList from "../lists/3xcalibur-default.json";
 import { buildList, VersionBump } from "../src/buildList";
-import getTokenChainData from "../src/utils/getTokensChainData";
-import { getAptosCoinsChainData } from "../src/utils/getAptosCoinChainData";
+import getTokensChainData from "../src/utils/getTokensChainData";
+
+type TestOpts =
+  | {
+      skipLogo?: boolean;
+    }
+  | undefined;
 
 const listArgs = process.argv
   ?.find((arg) => arg.includes("--list="))
   ?.split("--list=")
   .pop();
 
-const CASES = [
-  ["pancakeswap-default"],
-  ["pancakeswap-extended"],
-  ["pancakeswap-top-100"],
-  ["pancakeswap-top-15"],
-  ["coingecko", { skipLogo: true, aptos: false }],
-  ["cmc", { skipLogo: true, aptos: false }],
-  ["pancakeswap-mini"],
-  ["pancakeswap-mini-extended"],
-  ["pancakeswap-aptos", { skipLogo: true, aptos: true }],
-] as const;
+const CASES = [["3xcalibur-default"]] as const;
 
 const cases = listArgs ? CASES.filter((c) => c[0] === listArgs) : CASES;
 
 const currentLists = {
-  "pancakeswap-default": currentPancakeswapDefaultList,
-  "pancakeswap-extended": currentPancakeswapExtendedtList,
-  "pancakeswap-top-100": currentPancakeswapTop100tList,
-  "pancakeswap-top-15": currentPancakeswapTop15List,
-  coingecko: currentCoingeckoList,
-  cmc: currentCmcList,
-  "pancakeswap-mini": currentPancakeswapMiniList,
-  "pancakeswap-mini-extended": currentPancakeswapMiniExtendedList,
-  "pancakeswap-aptos": currentPancakeswapAptosList,
-};
-
-const APTOS_COIN_ALIAS = {
-  CAKE: "Cake",
-  ceBNB: "BNB",
-  ceBUSD: "BUSD",
-  ceDAI: "DAI",
-  ceUSDC: "USDC",
-  ceUSDT: "USDT",
-  ceWBTC: "WBTC",
-  ceWETH: "WETH",
-  lzUSDC: "USDC",
-  lzUSDT: "USDT",
-  lzWETH: "WETH",
-  whBUSD: "BUSD",
-  whUSDC: "USDC",
-  whWETH: "WETH"
+  "3xcalibur-default": currentPancakeswapDefaultList,
 };
 
 const ajv = new Ajv({ allErrors: true, format: "full" });
@@ -129,31 +91,31 @@ expect.extend({
       pass: false,
     };
   },
-  toBeValidLogo(token) {
-    // TW logos are always checksummed
-    const hasTWLogo =
-      token.logoURI === `https://assets-cdn.trustwallet.com/blockchains/smartchain/assets/${token.address}/logo.png`;
-    let hasLocalLogo = false;
-    const refersToLocalLogo = token.logoURI === `https://tokens.pancakeswap.finance/images/${token.address}.png`;
-    if (refersToLocalLogo) {
-      const fileName = token.logoURI.split("/").pop();
-      // Note: fs.existsSync can't be used here because its not case sensetive
-      hasLocalLogo = logoFiles.map((f) => f.name).includes(fileName);
-    }
-    if (hasTWLogo || hasLocalLogo) {
-      return {
-        message: () => ``,
-        pass: true,
-      };
-    }
-    return {
-      message: () => `Token ${token.symbol} (${token.address}) has invalid logo: ${token.logoURI}`,
-      pass: false,
-    };
-  },
+  // toBeValidLogo(token) {
+  //   // TW logos are always checksummed
+  //   const hasTWLogo =
+  //     token.logoURI === `https://assets-cdn.trustwallet.com/blockchains/smartchain/assets/${token.address}/logo.png`;
+  //   let hasLocalLogo = false;
+  //   const refersToLocalLogo = token.logoURI === `https://tokens.pancakeswap.finance/images/${token.address}.png`;
+  //   if (refersToLocalLogo) {
+  //     const fileName = token.logoURI.split("/").pop();
+  //     // Note: fs.existsSync can't be used here because its not case sensetive
+  //     hasLocalLogo = logoFiles.map((f) => f.name).includes(fileName);
+  //   }
+  //   if (hasTWLogo || hasLocalLogo) {
+  //     return {
+  //       message: () => ``,
+  //       pass: true,
+  //     };
+  //   }
+  //   return {
+  //     message: () => `Token ${token.symbol} (${token.address}) has invalid logo: ${token.logoURI}`,
+  //     pass: false,
+  //   };
+  // },
 });
 
-describe.each(cases)("buildList %s", (listName, opt = undefined) => {
+describe.each(cases)("buildList %s", (listName, opt: TestOpts = undefined) => {
   const defaultTokenList = buildList(listName);
 
   it("validates", () => {
@@ -190,7 +152,7 @@ describe.each(cases)("buildList %s", (listName, opt = undefined) => {
   });
 
   it("all addresses are valid and checksummed", () => {
-    if (!opt || !opt.aptos) {
+    if (!opt) {
       for (const token of defaultTokenList.tokens) {
         expect(token.address).toBe(getAddress(token.address));
       }
@@ -216,25 +178,15 @@ describe.each(cases)("buildList %s", (listName, opt = undefined) => {
 
   it("all tokens have correct decimals", async () => {
     const addressArray = defaultTokenList.tokens.map((token) => token.address);
-    if (opt?.aptos === true) {
-      const coinsData = await getAptosCoinsChainData(addressArray);
-      for (const token of defaultTokenList.tokens) {
-        const coinData = coinsData.find((t) => t.address === token.address);
-        expect(token.decimals).toBeGreaterThanOrEqual(0);
-        expect(token.decimals).toBeLessThanOrEqual(30); // should be much more less
-        expect(token.decimals).toEqual(coinData?.decimals);
-        expect(APTOS_COIN_ALIAS[token.symbol] || token.symbol).toEqual(coinData?.symbol);
-      }
-    } else {
-      const tokensChainData = await getTokenChainData("test", addressArray);
-      for (const token of defaultTokenList.tokens) {
-        const realDecimals = tokensChainData.find(
-          (t) => t.address.toLowerCase() === token.address.toLowerCase()
-        )?.decimals;
-        expect(token.decimals).toBeGreaterThanOrEqual(0);
-        expect(token.decimals).toBeLessThanOrEqual(255);
-        expect(token.decimals).toEqual(realDecimals);
-      }
+
+    const tokensChainData = await getTokensChainData(addressArray);
+    for (const token of defaultTokenList.tokens) {
+      const realDecimals = tokensChainData.find(
+        (t) => t.address.toLowerCase() === token.address.toLowerCase()
+      )?.decimals;
+      expect(token.decimals).toBeGreaterThanOrEqual(0);
+      expect(token.decimals).toBeLessThanOrEqual(255);
+      expect(token.decimals).toEqual(realDecimals);
     }
   });
 
