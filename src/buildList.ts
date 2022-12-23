@@ -20,7 +20,7 @@ const lists = {
   "3xcalibur-default": {
     list: threexcaliburDefault,
     name: "3xcalibur Default",
-    keywords: ["3xcalibur", "default"],
+    keywords: ["xcalibur", "default"],
     logoURI: "https://tokens.3xcalibur.com/images/symbol/XCAL.png",
     sort: false,
     currentVersion: threexcaliburDefaultVersion,
