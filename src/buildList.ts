@@ -1,24 +1,8 @@
 import fs from "fs";
 import path from "path";
 import { TokenList } from "@pancakeswap/token-lists";
-import { version as pancakeswapDefaultVersion } from "../lists/pancakeswap-default.json";
-import { version as pancakeswapExtendedVersion } from "../lists/pancakeswap-extended.json";
-import { version as pancakeswapTop15Version } from "../lists/pancakeswap-top-15.json";
-import { version as pancakeswapTop100Version } from "../lists/pancakeswap-top-100.json";
-import { version as pancakeswapAptosVersion } from "../lists/pancakeswap-aptos.json";
-import { version as coingeckoVersion } from "../lists/coingecko.json";
-import { version as cmcVersion } from "../lists/cmc.json";
-import { version as pancakeswapMiniVersion } from "../lists/pancakeswap-mini.json";
-import { version as pancakeswapMiniExtendedVersion } from "../lists/pancakeswap-mini-extended.json";
-import pancakeswapAptos from "./tokens/pancakeswap-aptos.json";
-import pancakeswapDefault from "./tokens/pancakeswap-default.json";
-import pancakeswapExtended from "./tokens/pancakeswap-extended.json";
-import pancakeswapTop100 from "./tokens/pancakeswap-top-100.json";
-import pancakeswapTop15 from "./tokens/pancakeswap-top-15.json";
-import coingecko from "./tokens/coingecko.json";
-import cmc from "./tokens/cmc.json";
-import pancakeswapMini from "./tokens/pancakeswap-mini.json";
-import pancakeswapMiniExtended from "./tokens/pancakeswap-mini-extended.json";
+import { version as threexcaliburDefaultVersion } from "../lists/3xcalibur-default.json";
+import threexcaliburDefault from "./tokens/3xcalibur-default.json";
 
 export enum VersionBump {
   "major" = "major",
@@ -33,79 +17,13 @@ type Version = {
 };
 
 const lists = {
-  "pancakeswap-aptos": {
-    list: pancakeswapAptos,
-    name: "PancakeSwap Aptos",
-    keywords: ["pancakeswap", "aptos"],
-    logoURI: "https://pancakeswap.finance/logo.png",
-    sort: true,
-    currentVersion: pancakeswapAptosVersion,
-    schema: "aptos",
-  },
-  "pancakeswap-default": {
-    list: pancakeswapDefault,
-    name: "PancakeSwap Default",
-    keywords: ["pancakeswap", "default"],
-    logoURI: "https://pancakeswap.finance/logo.png",
+  "3xcalibur-default": {
+    list: threexcaliburDefault,
+    name: "3xcalibur Default",
+    keywords: ["3xcalibur", "default"],
+    logoURI: "https://tokens.3xcalibur.com/images/symbol/XCAL.png",
     sort: false,
-    currentVersion: pancakeswapDefaultVersion,
-  },
-  "pancakeswap-extended": {
-    list: pancakeswapExtended,
-    name: "PancakeSwap Extended",
-    keywords: ["pancakeswap", "extended"],
-    logoURI: "https://pancakeswap.finance/logo.png",
-    sort: true,
-    currentVersion: pancakeswapExtendedVersion,
-  },
-  "pancakeswap-top-100": {
-    list: pancakeswapTop100,
-    name: "PancakeSwap Top 100",
-    keywords: ["pancakeswap", "top 100"],
-    logoURI: "https://pancakeswap.finance/logo.png",
-    sort: true,
-    currentVersion: pancakeswapTop100Version,
-  },
-  "pancakeswap-top-15": {
-    list: pancakeswapTop15,
-    name: "PancakeSwap Top 15",
-    keywords: ["pancakeswap", "top 15"],
-    logoURI: "https://pancakeswap.finance/logo.png",
-    sort: true,
-    currentVersion: pancakeswapTop15Version,
-  },
-  coingecko: {
-    list: coingecko,
-    name: "CoinGecko",
-    keywords: ["defi"],
-    logoURI:
-      "https://www.coingecko.com/assets/thumbnail-007177f3eca19695592f0b8b0eabbdae282b54154e1be912285c9034ea6cbaf2.png",
-    sort: true,
-    currentVersion: coingeckoVersion,
-  },
-  cmc: {
-    list: cmc,
-    name: "CoinMarketCap",
-    keywords: ["defi"],
-    logoURI: "https://ipfs.io/ipfs/QmQAGtNJ2rSGpnP6dh6PPKNSmZL8RTZXmgFwgTdy5Nz5mx",
-    sort: true,
-    currentVersion: cmcVersion,
-  },
-  "pancakeswap-mini": {
-    list: pancakeswapMini,
-    name: "PancakeSwap Mini",
-    keywords: ["pancakeswap", "binance", "mini program", "mini"],
-    logoURI: "https://pancakeswap.finance/logo.png",
-    sort: true,
-    currentVersion: pancakeswapMiniVersion,
-  },
-  "pancakeswap-mini-extended": {
-    list: pancakeswapMiniExtended,
-    name: "PancakeSwap Mini Ext",
-    keywords: ["pancakeswap", "binance", "mini program", "mini", "extended"],
-    logoURI: "https://pancakeswap.finance/logo.png",
-    sort: true,
-    currentVersion: pancakeswapMiniExtendedVersion,
+    currentVersion: threexcaliburDefaultVersion,
   },
 };
 
